@@ -28,6 +28,14 @@ def calculate_monthly_interest(principal: float, annual_rate: float) -> float:
     return A - principal
 
 
+def calculate_monthly_interest_daily_accrual(
+    principal: float, annual_rate: float, days: int = 30
+) -> float:
+    r = annual_rate / 100  # Convert percentage to decimal
+    A = principal * ((1 + r / 365) ** days)
+    return A - principal
+
+
 def calculate_daily_interest(principal: float, annual_rate: float) -> float:
     r = annual_rate / 100  # Convert percentage to decimal
     daily_rate = r / 365  # Daily interest rate
@@ -43,6 +51,17 @@ if __name__ == "__main__":
     print(f"Determined annual interest rate: {annual_rate}%")
 
     monthly_interest = calculate_monthly_interest(principal, annual_rate)
+    monthly_interest_daily_accrual = calculate_monthly_interest_daily_accrual(
+        principal, annual_rate
+    )
     daily_interest = calculate_daily_interest(principal, annual_rate)
-    print(f"Monthly interest accrued: ${monthly_interest:.2f}")
+    print(f"Monthly interest accrued (continuous compounding): ${monthly_interest:.2f}")
+    print(
+        "Monthly interest accrued (daily accrual, 30 days): "
+        f"${monthly_interest_daily_accrual:.2f}"
+    )
+    print(
+        "Monthly calculation difference: "
+        f"${abs(monthly_interest - monthly_interest_daily_accrual):.2f}"
+    )
     print(f"Daily interest accrued: ${daily_interest:.2f}")
